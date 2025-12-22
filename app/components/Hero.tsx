@@ -38,8 +38,27 @@ const Hero = () => {
       </section>
     
       <section className="" id="about">
-        <div className="container mx-auto px-6 py-20">
-          <div className="flex "></div>
+        <div className="container mx-auto  px-6 py-20">
+          <div className="flex justify-between gap-4">
+            <div className="w-1/2">
+              <h2 className="text-3xl font-bold mb-6 text-gray-800">About SmartPiggy</h2>
+              <p className="text-lg mb-4 text-gray-600">
+                SmartPiggy is your personal finance companion designed to help you take control of your money. Whether you're looking to budget better, track your expenses, or save for future goals, SmartPiggy has got you covered.
+              </p>
+              <p className="text-lg mb-4 text-gray-600">
+                Our intuitive platform offers a range of features to simplify your financial management, making it easier than ever to stay on top of your finances and make informed decisions.
+              </p>
+            </div>
+            <div className="w-1/2">
+              <Image
+                src="/image/about-image.webp"
+                alt="About SmartPiggy"
+                width={500}
+                height={300}
+                className="w-full h-auto rounded-lg"
+              />
+            </div>
+          </div>
         </div>
       </section>
     </>
