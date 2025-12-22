@@ -1,0 +1,47 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+  --neutral--white: white;
+  --neutral--black-900: #080808;
+  --neutral--white-200: #f2f2f2;
+}
+
+body {
+  font-family: 'Rubik', sans-serif;
+  background-color:var(--neutral--white-200);
+  color: var(--foreground);
+  margin: 0;
+  padding: 0;
+}
+
+.get-started-btn{
+  font-size: 15px;
+  font-family: 'Rubik', sans-serif;
+  padding: 15px 25px;
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.hero-section{
+  background-image: linear-gradient(180deg, #0000, var(--neutral--white-200)), url('./image/hero.png');
+  background-position: 0 0, 50%;
+  background-repeat: repeat, no-repeat;
+  background-size: auto, cover;
+  padding-top: 6.25rem;
+  padding-bottom: 3.75rem;
+}
+
+.header-image-wrapper
+ {
+    background-image: linear-gradient(#c5ebff, #bfe7ff);
+    border: 1px solid #caedff;
+    border-radius: .75rem;
+    padding: .625rem;
+}
+
