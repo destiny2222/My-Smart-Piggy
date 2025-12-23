@@ -17,7 +17,7 @@ const Hero = () => {
   useEffect(() => {
     if (!isMounted) return;
     
-    let timeout;
+    let timeout: ReturnType<typeof setTimeout>;
     
     const typeWriter = () => {
       const currentLength = typewriterText.length;
