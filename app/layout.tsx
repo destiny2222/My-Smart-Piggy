@@ -24,7 +24,7 @@ export default function RootLayout({
       <head>
         <link  href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"  />
       </head>
-      <body className={`${rubik.variable} font-sans bg-neutral--white-200 text-neutral--black-900`}>
+      <body className={`${rubik.variable} font-sans bg-neutral--white-200 text-neutral--black-900`} suppressHydrationWarning>
         {children}
       </body>
     </html>

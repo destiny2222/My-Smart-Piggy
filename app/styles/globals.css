@@ -1,11 +1,21 @@
 @import "tailwindcss";
 
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
   --neutral--white: white;
   --neutral--black-900: #080808;
   --neutral--white-200: #f2f2f2;
+  --primary--gold: #E6B422;
+  --primary--gold-light: #FFD966;
+  --primary--gold-dark: #CC9A19;
+  --background--deep-blue: #0A1628;
+  --background--deep-blue-light: #142136;
+  --card: #101D2E;
+  --text--cream: #FFFEF5;
+  --text--muted: #A3B1C6;
+  --border: #2D3D54;
 }
 
 body {
@@ -20,7 +30,7 @@ body {
   font-size: 15px;
   font-family: 'Rubik', sans-serif;
   padding: 15px 25px;
-  background-color: #3b82f6;
+  background-color: #1447E6;
   color: white;
   border: none;
   border-radius: 20px;
@@ -45,3 +55,145 @@ body {
     padding: .625rem;
 }
 
+.bg-section{
+  background-color: var(--background--deep-blue);
+}
+
+
+
+.feature-card {
+  background-color: var(--background--deep-blue);
+  border: 1px solid var(--border);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border-radius: 20px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.feature-card:hover {
+  background-color: var(--background--deep-blue-light);
+  border: 1.5px solid #1447E6;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+  transition: all 0.3s ease-in-out;
+}
+
+.icon-wrapper {
+  background-color: rgba(15, 24, 181, 0.1);
+}
+
+.feature-card:hover .icon-wrapper {
+  background-color: var(--background--deep-blue);
+  transition: background-color 0.3s ease;
+}
+
+.feature-card:hover .icon-wrapper-transition {
+  color: #1447E6;
+  transition: color 0.3s ease;
+}
+
+.cta-section {
+  background-color: var(--background--deep-blue);
+}
+
+.cta-btn {
+  font-size: 16px;
+  font-weight: 600;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+}
+
+.cta-btn:hover {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.4);
+}
+
+.footer-section {
+  background-color: var(--background--deep-blue);
+}
+
+.typewriter-cursor {
+  display: inline-block;
+  animation: blink 1s step-end infinite;
+  margin-left: 2px;
+}
+
+@keyframes blink {
+  0%, 50% {
+    opacity: 1;
+  }
+  51%, 100% {
+    opacity: 0;
+  }
+}
+
+/* Scroll Animation Styles */
+.js-scroll {
+  opacity: 0;
+  transition: opacity 500ms;
+}
+
+.js-scroll.scrolled {
+  opacity: 1;
+}
+
+.scrolled.fade-in {
+  animation: fade-in 1.5s ease-in-out both;
+}
+
+.scrolled.fade-in-bottom {
+  animation: fade-in-bottom 1.5s ease-in-out both;
+}
+
+.scrolled.slide-left {
+  animation: slide-in-left 1.5s ease-in-out both;
+}
+
+.scrolled.slide-right {
+  animation: slide-in-right 1.5s ease-in-out both;
+}
+
+@keyframes slide-in-left {
+  0% {
+    -webkit-transform: translateX(-100px);
+    transform: translateX(-100px);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slide-in-right {
+  0% {
+    -webkit-transform: translateX(100px);
+    transform: translateX(100px);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fade-in-bottom {
+  0% {
+    -webkit-transform: translateY(100px);
+    transform: translateY(100px);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
