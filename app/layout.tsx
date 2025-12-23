@@ -11,6 +11,12 @@ const rubik = Rubik({
 export const metadata: Metadata = {
   title: "SmartPiggy",
   description: "SmartPiggy - Your Personal Finance Companion",
+  icons: {
+    icon: [
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+      { url: '/favicon.ico', sizes: 'any' }
+    ],
+  },
 };
 
 

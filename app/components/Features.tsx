@@ -34,7 +34,7 @@ export default function Features() {
       scale: 1,
       transition: {
         duration: 0.6,
-        ease: [0.4, 0, 0.2, 1]
+        ease: "easeOut" as const
       }
     }
   };
@@ -66,7 +66,7 @@ export default function Features() {
                     transition={{
                       duration: 0.5,
                       delay: index * 0.1,
-                      ease: [0.4, 0, 0.2, 1]
+                      ease: "easeOut" as const
                     }}
                     className={isHighlighted ? "text-[#1447E6]" : ""}
                     style={{ display: "inline-block", marginRight: "0.25em" }}
