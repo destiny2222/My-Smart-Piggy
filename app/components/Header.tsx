@@ -33,7 +33,7 @@ const Header = () => {
           ))}
         </nav>
         <div className="hidden md:block">
-          <Link href="/get-started" className="bg-[#1447E6] text-white hover:bg-[#0f3bbd] get-started-btn">Get Started</Link>
+          <Link href="/login" className="bg-[#1447E6] text-white hover:bg-[#0f3bbd] get-started-btn">Get Started</Link>
         </div>
         <div className="md:hidden">
           <Button onClick={() => setIsMenuOpen(!isMenuOpen)}>
@@ -56,7 +56,7 @@ const Header = () => {
               </Link>
             ))}
             <Link 
-              href="/get-started" 
+              href="/login" 
               className="bg-[#1447E6] text-white hover:bg-[#0f3bbd] get-started-btn text-center mt-2"
               onClick={() => setIsMenuOpen(false)}
             >
