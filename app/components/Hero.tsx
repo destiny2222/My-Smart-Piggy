@@ -3,8 +3,10 @@ import { ArrowRight, Sparkles } from "lucide-react";
 import Image from "next/image";
 import Button from "./ui/button";
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 const Hero = () => {
+  const router = useRouter();
   const [typewriterText, setTypewriterText] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
@@ -48,6 +50,10 @@ const Hero = () => {
     return () => clearTimeout(timeout);
   }, [typewriterText, isDeleting, isMounted]);
 
+  const navigateToGetStarted = () => {
+    router.push('/login');
+  }
+
   return (
     <>
       <section className="hero-section">
@@ -60,10 +66,10 @@ const Hero = () => {
               Manage your budget, track expenses, and achieve your savings goals all in one place.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 sm:gap-0 justify-center items-center">
-              <Button variant="primary" size="lg" className="inline-flex items-center js-scroll fade-in px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-300 w-full sm:w-auto">
+              <Button onClick={navigateToGetStarted} variant="primary" size="lg" className="inline-flex items-center cursor-pointer js-scroll fade-in px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-300 w-full sm:w-auto">
                 Get Started <ArrowRight className="ml-2" />
               </Button>
-              <Button variant="outline" size="lg" className="inline-flex items-center js-scroll fade-in px-6 py-3 sm:ml-4 border-blue-500 text-blue-500 rounded-lg hover:bg-blue-50 transition duration-300 w-full sm:w-auto">
+              <Button variant="outline" size="lg" className="inline-flex items-center cursor-pointer js-scroll fade-in px-6 py-3 sm:ml-4 border-blue-500 text-blue-500 rounded-lg hover:bg-blue-50 transition duration-300 w-full sm:w-auto">
                 Learn More <Sparkles className="ml-2" />
               </Button>
             </div>

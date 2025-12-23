@@ -10,5 +10,9 @@ export default function DashboardPage() {
     router.push("/dashboard/history");
   }, [router]);
 
-  return null;
+  return (
+    <div>
+        
+    </div>
+  );
 }
