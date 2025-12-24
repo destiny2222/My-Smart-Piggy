@@ -12,13 +12,13 @@ const Footer = () => {
             Ready to Start Your <br />
             <span className="text-[#1447E6]">Savings Journey?</span>
           </h2>
-          <p className=" js-scroll fade-in text-lg mb-8 text-[#A3B1C6] max-w-3xl mx-auto">
+          <p className=" js-scroll fade-in font-normal text-lg mb-8 text-[#A3B1C6] max-w-3xl mx-auto">
             Join thousands of smart savers who are building their future, one day at a time. No pressure, no judgment — just progress.
           </p>
           <button className="cta-btn inline-flex items-center js-scroll fade-in px-8 py-4 bg-[#1447E6] text-white font-bold rounded-lg hover:bg-[#0F35B8] transition duration-300">
             Get Started Free <ArrowRight className="ml-2" />
           </button>
-          <p className="text-sm mt-4 text-[#A3B1C6]">
+          <p className="text-sm font-normal mt-4 text-[#A3B1C6]">
             No credit card required • Start in 30 seconds
           </p>
         </div>
@@ -49,7 +49,7 @@ const Footer = () => {
             </Link>
           </nav>
 
-          <p className="text-[#A3B1C6] text-sm">
+          <p className="text-[#A3B1C6] text-sm font-normal">
             © 2024 My Smart Piggy. All rights reserved.
           </p>
         </div>
