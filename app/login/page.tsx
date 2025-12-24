@@ -2,22 +2,34 @@
 import { useState } from "react";
 import Link from "next/link";
 import { PiggyBank, Mail, Lock, Eye, EyeOff, ArrowRight } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { useAuth } from "@/app/context/AuthContext";
+import PublicRoute from "@/app/components/PublicRoute";
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const router = useRouter();
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const { login } = useAuth();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Add authentication logic here
-    router.push("/dashboard");
+    setError("");
+    setLoading(true);
+
+    try {
+      await login(email, password);
+    } catch (err: any) {
+      setError(err.message || "Login failed. Please check your credentials.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
-    <div className="min-h-screen flex">
+    <PublicRoute>
+      <div className="min-h-screen flex">
       {/* Left Side - Login Form */}
       <div className="w-full lg:w-1/2 flex items-center justify-center px-6 py-12 bg-white">
         <div className="w-full max-w-md">
@@ -29,6 +41,13 @@ export default function LoginPage() {
 
           {/* Login Form */}
           <form onSubmit={handleSubmit} className="space-y-5">
+            {/* Error Message */}
+            {error && (
+              <div className="p-4 bg-red-50 border border-red-200 rounded-xl">
+                <p className="text-sm text-red-600">{error}</p>
+              </div>
+            )}
+
             {/* Email Input */}
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
@@ -91,10 +110,11 @@ export default function LoginPage() {
             {/* Submit Button */}
             <button
               type="submit"
-              className="w-full py-3.5 bg-[#1447E6] text-white font-semibold rounded-xl hover:bg-[#0F35B8] transition duration-300 shadow-lg shadow-blue-500/30 flex items-center justify-center gap-2 group"
+              disabled={loading}
+              className="w-full py-3.5 bg-[#1447E6] text-white font-semibold rounded-xl hover:bg-[#0F35B8] transition duration-300 shadow-lg shadow-blue-500/30 flex items-center justify-center gap-2 group disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Sign In
-              <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
+              {loading ? "Signing In..." : "Sign In"}
+              {!loading && <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />}
             </button>
           </form>
 
@@ -151,5 +171,6 @@ export default function LoginPage() {
         </div>
       </div>
     </div>
+    </PublicRoute>
   );
 }

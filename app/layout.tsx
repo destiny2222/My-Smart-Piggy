@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import './styles/globals.css';
 import { Rubik } from 'next/font/google';
+import { AuthProvider } from './context/AuthContext';
 
 const rubik = Rubik({
   subsets: ['latin'],
@@ -31,7 +32,9 @@ export default function RootLayout({
         <link  href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"  />
       </head>
       <body className={`${rubik.variable} font-sans bg-neutral--white-200 text-neutral--black-900`} suppressHydrationWarning>
-        {children}
+        <AuthProvider>
+          {children}
+        </AuthProvider>
       </body>
     </html>
   );

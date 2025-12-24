@@ -1,43 +1,71 @@
 "use client";
+import { useEffect, useState } from "react";
 import { Calendar, TrendingUp, TrendingDown, DollarSign } from "lucide-react";
+import { userApi, PaymentHistory } from "@/app/lib/api";
 
 export default function HistoryPage() {
-  const transactions = [
-    { id: 1, type: "deposit", amount: 500, description: "Monthly Savings", date: "2025-12-20", category: "Savings" },
-    { id: 2, type: "withdrawal", amount: 150, description: "Grocery Shopping", date: "2025-12-18", category: "Food" },
-    { id: 3, type: "deposit", amount: 1000, description: "Salary", date: "2025-12-15", category: "Income" },
-    { id: 4, type: "withdrawal", amount: 75, description: "Gas Station", date: "2025-12-12", category: "Transport" },
-    { id: 5, type: "deposit", amount: 200, description: "Freelance Work", date: "2025-12-10", category: "Income" },
-    { id: 6, type: "withdrawal", amount: 300, description: "Rent Payment", date: "2025-12-05", category: "Bills" },
-  ];
+  const [payments, setPayments] = useState<PaymentHistory[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    const fetchPaymentHistory = async () => {
+      try {
+        const response = await userApi.getPaymentHistory();
+        setPayments(response.data);
+      } catch (err: any) {
+        setError(err.message || "Failed to load payment history");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPaymentHistory();
+  }, []);
+
+  const formatCurrency = (amount: number) => {
+    return new Intl.NumberFormat('en-NG', {
+      style: 'currency',
+      currency: 'NGN',
+      minimumFractionDigits: 2
+    }).format(amount);
+  };
+
+  const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric'
+    });
+  };
+
+  const totalPaid = payments.reduce((sum, payment) => sum + Number(payment.amount_paid), 0);
 
   const stats = [
-    { label: "Total Income", value: "$1,700", icon: TrendingUp, color: "text-green-600", bg: "bg-green-50" },
-    { label: "Total Expenses", value: "$525", icon: TrendingDown, color: "text-red-600", bg: "bg-red-50" },
-    { label: "Net Savings", value: "$1,175", icon: DollarSign, color: "text-[#1447E6]", bg: "bg-blue-50" },
+    { label: "Total Payments", value: formatCurrency(totalPaid), icon: TrendingUp, color: "text-green-600", bg: "bg-green-50" },
   ];
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 md:space-y-6 max-w-full">
       {/* Page Header */}
       <div>
-        <h1 className="text-3xl font-bold text-gray-800 mb-2">Transaction History</h1>
-        <p className="text-gray-600">View all your financial transactions</p>
+        <h1 className="text-2xl md:text-3xl font-bold text-gray-800 mb-2">Transaction History</h1>
+        <p className="text-sm md:text-base text-gray-600">View all your financial transactions</p>
       </div>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
         {stats.map((stat, index) => {
           const Icon = stat.icon;
           return (
-            <div key={index} className="bg-white rounded-lg p-6 shadow-sm border border-gray-200">
+            <div key={index} className="bg-white rounded-lg p-4 md:p-6 shadow-sm border border-gray-200">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-gray-600 mb-1">{stat.label}</p>
-                  <p className={`text-2xl font-bold ${stat.color}`}>{stat.value}</p>
+                  <p className="text-xs md:text-sm text-gray-600 mb-1">{stat.label}</p>
+                  <p className={`text-xl md:text-2xl font-bold ${stat.color}`}>{stat.value}</p>
                 </div>
-                <div className={`w-12 h-12 ${stat.bg} rounded-lg flex items-center justify-center`}>
-                  <Icon className={stat.color} size={24} />
+                <div className={`w-10 h-10 md:w-12 md:h-12 ${stat.bg} rounded-lg flex items-center justify-center`}>
+                  <Icon className={stat.color} size={20} />
                 </div>
               </div>
             </div>
@@ -46,72 +74,71 @@ export default function HistoryPage() {
       </div>
 
       {/* Transactions Table */}
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
-        <div className="px-6 py-4 border-b border-gray-200">
-          <h2 className="text-xl font-bold text-gray-800">Recent Transactions</h2>
+      <div className="bg-white rounded-lg shadow-sm border border-gray-200">
+        <div className="px-4 md:px-6 py-3 md:py-4 border-b border-gray-200">
+          <h2 className="text-lg md:text-xl font-bold text-gray-800">Payment History</h2>
         </div>
         
-        <div className="overflow-x-auto">
-          <table className="w-full">
-            <thead className="bg-gray-50 border-b border-gray-200">
-              <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Date
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Description
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Category
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Type
-                </th>
-                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Amount
-                </th>
-              </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {transactions.map((transaction) => (
-                <tr key={transaction.id} className="hover:bg-gray-50 transition">
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
-                    <div className="flex items-center gap-2">
-                      <Calendar size={16} className="text-gray-400" />
-                      {transaction.date}
-                    </div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">
-                    {transaction.description}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
-                    <span className="px-2 py-1 bg-gray-100 rounded-full text-xs">
-                      {transaction.category}
-                    </span>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm">
-                    {transaction.type === "deposit" ? (
-                      <span className="flex items-center gap-1 text-green-600">
-                        <TrendingUp size={16} />
-                        Deposit
-                      </span>
-                    ) : (
-                      <span className="flex items-center gap-1 text-red-600">
-                        <TrendingDown size={16} />
-                        Withdrawal
-                      </span>
-                    )}
-                  </td>
-                  <td className={`px-6 py-4 whitespace-nowrap text-sm font-semibold text-right ${
-                    transaction.type === "deposit" ? "text-green-600" : "text-red-600"
-                  }`}>
-                    {transaction.type === "deposit" ? "+" : "-"}${transaction.amount}
-                  </td>
+        {loading ? (
+          <div className="px-4 md:px-6 py-8 text-center text-gray-600">
+            Loading payment history...
+          </div>
+        ) : error ? (
+          <div className="px-4 md:px-6 py-8 text-center text-red-600">
+            {error}
+          </div>
+        ) : payments.length === 0 ? (
+          <div className="px-4 md:px-6 py-8 text-center text-gray-600">
+            No payment history found
+          </div>
+        ) : (
+          <div className="overflow-x-auto -mx-px">
+            <table className="w-full text-center">
+              <thead className="bg-gray-50 border-b border-gray-200">
+                <tr>
+                  <th className="px-3 md:px-6 py-2 md:py-3  text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    ID
+                  </th>
+                  <th className="px-3 md:px-6 py-2 md:py-3  text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Amount
+                  </th>
+                  <th className="px-3 md:px-6 py-2 md:py-3  text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Payment Date
+                  </th>
+                  
+                  <th className="px-3 md:px-6 py-2 md:py-3  text-xs font-medium text-gray-500 uppercase tracking-wider hidden lg:table-cell">
+                    Status
+                  </th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200">
+                {payments.map((payment) => (
+                  <tr key={payment.id} className="hover:bg-gray-50 transition">
+                    <td className="px-3 md:px-6 py-2 md:py-3 text-xs md:text-sm text-gray-600">
+                      <span className="font-semibold">#{payment.id}</span>
+                    </td>
+                    <td className="px-3 md:px-6 py-2 md:py-3 whitespace-nowrap text-xs md:text-sm font-semibold  text-green-600">
+                      {formatCurrency(Number(payment.amount_paid))}
+                    </td>
+                    <td className="px-3 md:px-6 py-2 md:py-3 text-xs md:text-sm text-gray-600">
+                      <span className="whitespace-nowrap">{formatDate(payment.paid_date)}</span>
+                    </td>
+                    
+                    <td className="px-3 md:px-6 py-3 md:py-4 text-sm hidden lg:table-cell">
+                      <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                        payment.status === 'paid' 
+                          ? 'bg-green-100 text-green-800' 
+                          : 'bg-yellow-100 text-yellow-800'
+                      }`}>
+                        {payment.status}
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
       </div>
     </div>
   );
