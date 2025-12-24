@@ -130,7 +130,7 @@ export interface PaymentHistory {
   user_id: string;
   amount_paid: number;
   status: string;
-  payment_date: string;
+  paid_date: string;
   created_at: string;
 }
 
