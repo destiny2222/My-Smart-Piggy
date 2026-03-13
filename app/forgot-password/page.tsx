@@ -2,11 +2,13 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { PiggyBank, Mail, Lock, Eye, EyeOff, ArrowRight, ArrowLeft, CheckCircle2, ShieldCheck } from "lucide-react";
 import { authApi } from "@/app/lib/api";
 import PublicRoute from "@/app/components/PublicRoute";
 
 export default function ForgotPasswordPage() {
+  const router = useRouter();
   const [step, setStep] = useState<"email" | "reset">("email");
   const [email, setEmail] = useState("");
   const [otp, setOtp] = useState("");
@@ -26,8 +28,9 @@ export default function ForgotPasswordPage() {
       const response = await authApi.forgotPassword(email);
       setSuccess(response.message || "OTP sent successfully. Please check your email.");
       setStep("reset");
-    } catch (err: any) {
-      setError(err.message || "Failed to send OTP. Please try again.");
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : "Failed to send OTP. Please try again.";
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }
@@ -46,10 +49,15 @@ export default function ForgotPasswordPage() {
 
     try {
       const response = await authApi.resetPassword(email, otp, password, passwordConfirmation);
-      setSuccess(response.message || "Password reset successful! You can now log in.");
-      // Optional: Redirect to login after a delay
-    } catch (err: any) {
-      setError(err.message || "Failed to reset password. Please check your OTP and try again.");
+      setSuccess(response.message || "Password reset successful! Redirecting to login...");
+      
+      // Redirect to login after a delay
+      setTimeout(() => {
+        router.push("/login");
+      }, 2000);
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : "Failed to reset password. Please check your OTP and try again.";
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }
