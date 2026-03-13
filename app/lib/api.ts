@@ -169,6 +169,28 @@ export const authApi = {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
   },
+
+  forgotPassword: async (email: string): Promise<{ message: string }> => {
+    return apiClient.post<{ message: string }>('/forgot-password', { email });
+  },
+
+  verifyOtp: async (email: string, otp: string): Promise<{ message: string }> => {
+    return apiClient.post<{ message: string }>('/verify-otp', { email, otp });
+  },
+
+  resetPassword: async (
+    email: string,
+    otp: string,
+    password: string,
+    password_confirmation: string
+  ): Promise<{ message: string }> => {
+    return apiClient.post<{ message: string }>('/reset-password', {
+      email,
+      otp,
+      password,
+      password_confirmation,
+    });
+  },
 };
 
 // User API

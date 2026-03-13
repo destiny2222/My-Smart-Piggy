@@ -39,7 +39,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setUser(response.data);
       localStorage.setItem('user', JSON.stringify(response.data));
     } catch (error) {
-      console.error('Token verification failed:', error);
+      // console.error('Token verification failed:', error);
       logout();
     } finally {
       setLoading(false);
